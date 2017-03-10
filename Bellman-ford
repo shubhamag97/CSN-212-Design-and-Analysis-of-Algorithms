@@ -1,0 +1,73 @@
+#include <bits/stdc++.h>
+using namespace std;
+// input in the form of test cases, vertices, edges, then a--w-->b is given as a b w.
+//test input for whihc code is checked are given in the end.
+int main() {
+	int t;cin>>t;
+	while(t--)
+	{
+	int v,e;cin>>v>>e;
+	int arr[e][3];//inputs
+	int d[v]; // distance array.
+	for(int i=0;i<e;i++)
+	{cin>>arr[i][0]>>arr[i][1]>>arr[i][2];
+	arr[i][0]--;arr[i][1]--;
+	}
+	d[0]=0;
+	for(int i=1;i<v;i++)
+	{d[i]=1000000007;	// supposing max value of distance be less than this.
+	}
+	for(int j=0;j<v-1;j++)
+	{
+		for(int i=0;i<e;i++)
+		{
+			if(d[arr[i][0]]<1000000007)
+			{
+				int o=d[arr[i][0]]+arr[i][2];
+				if(o<d[arr[i][1]])
+				d[arr[i][1]]=o;
+			}
+		}
+	}
+	int f=0;
+	for(int i=0;i<e;i++)
+		if(d[arr[i][1]]>d[arr[i][0]]+arr[i][2])
+		{f=-1;break;}
+		if(f==-1)cout<<"The graph has negative cycle/cycles.";
+		else for(int i=0;i<v;i++)cout<<d[i]<<" ";
+	cout<<endl;
+	
+	}
+	
+	
+	
+	return 0;
+}
+// Input
+/*
+2
+6 8
+1 2 10
+1 6 8
+2 4 2
+3 2 1
+4 3 -12
+5 4 -1
+5 2 -4
+6 5 1
+
+6 8
+1 2 10
+1 6 8
+2 4 2
+3 2 1
+4 3 -2
+5 4 -1
+5 2 -4
+6 5 1
+*/
+//Output
+/*
+The graph has negative cycle/cycles.
+0 5 5 7 9 8 
+*/
